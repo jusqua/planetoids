@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
     public void InvokeExplosion(Vector3 position)
     {
         var explosion = Instantiate(explosionPrefab, position, Quaternion.identity);
-        Destroy(explosion.gameObject, explosion.main.duration + explosion.main.startLifetime.constantMax);
+        Destroy(explosion.gameObject, explosion.main.duration);
     }
 
     public void PlanetoidDestroyed(Planetoid planetoid)
