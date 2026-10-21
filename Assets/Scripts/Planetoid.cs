@@ -41,6 +41,26 @@ public class Planetoid : MonoBehaviour
         transform.eulerAngles = new Vector3(0.0f, 0.0f, Random.value * 360.0f);
     }
 
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Bullet"))
+        {
+            if ((size * 0.5f) >= minSize)
+            {
+                CreateSplit();
+                CreateSplit();
+            }
+            Destroy(gameObject);
+        }
+    }
+
+    private void CreateSplit()
+    {
+        var half = Instantiate(this, (Vector2)transform.position + Random.insideUnitCircle * 0.5f, transform.rotation);
+        half.size = size * 0.5f;
+        half.SetTrajectory(Random.insideUnitCircle.normalized * speed * 0.5f);
+    }
+
     public void SetTrajectory(Vector2 direction)
     {
         m_rigidbody.AddForce(direction * speed);

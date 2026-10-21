@@ -43,6 +43,17 @@ public class Player : MonoBehaviour
             m_rigidbody.AddTorque(m_turnDirection * turnSpeed);
     }
 
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Planetoid"))
+        {
+            m_rigidbody.angularVelocity = 0;
+            m_rigidbody.linearVelocity = Vector2.zero;
+            gameObject.SetActive(false);
+            GameManager.Instance.PlayerDied();
+        }
+    }
+
     private void Shoot()
     {
         Instantiate(bulletPrefab, transform.position + transform.up * m_offset, transform.rotation).Project(transform.up);
