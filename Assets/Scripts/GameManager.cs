@@ -9,7 +9,10 @@ public class GameManager : MonoBehaviour
 
     public float respawnTime = 3.0f;
     public float respawnInvulnerabilityTime = 3.0f;
+    public int startupLives = 3;
     public int lives = 3;
+    public int scoreWeight = 100;
+    public int score = 0;
 
     private void Awake()
     {
@@ -31,6 +34,7 @@ public class GameManager : MonoBehaviour
 
     public void PlanetoidDestroyed(Planetoid planetoid)
     {
+        score += (int)(scoreWeight * (planetoid.maxSize - planetoid.size));
         InvokeExplosion(planetoid.transform.position);
     }
 
@@ -39,7 +43,7 @@ public class GameManager : MonoBehaviour
         lives--;
         if (lives <= 0)
         {
-            GameOver();
+            Invoke(nameof(GameOver), respawnTime);
         }
         else
         {
@@ -63,6 +67,8 @@ public class GameManager : MonoBehaviour
 
     private void GameOver()
     {
-        // TODO
+        lives = startupLives;
+        score = 0;
+        Respawn();
     }
 }
