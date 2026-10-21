@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Linq;
 
 [RequireComponent(typeof(LineRenderer))]
-[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Rigidbody2D))]
 public class Planetoid : MonoBehaviour
 {
     public float speed = 10.0f;
