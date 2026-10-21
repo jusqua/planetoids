@@ -4,7 +4,9 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    public Player player;
+    public Player playerRef;
+    public ParticleSystem explosionPrefab;
+
     public float respawnTime = 3.0f;
     public float respawnInvulnerabilityTime = 3.0f;
     public int lives = 3;
@@ -21,6 +23,17 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void InvokeExplosion(Vector3 position)
+    {
+        var explosion = Instantiate(explosionPrefab, position, Quaternion.identity);
+        Destroy(explosion.gameObject, explosion.main.duration + explosion.main.startLifetime.constantMax);
+    }
+
+    public void PlanetoidDestroyed(Planetoid planetoid)
+    {
+        InvokeExplosion(planetoid.transform.position);
+    }
+
     public void PlayerDied()
     {
         lives--;
@@ -32,19 +45,20 @@ public class GameManager : MonoBehaviour
         {
             Invoke(nameof(Respawn), respawnTime);
         }
+        InvokeExplosion(playerRef.transform.position);
     }
 
     private void Respawn()
     {
-        player.transform.position = Vector3.zero;
-        player.gameObject.layer = LayerMask.NameToLayer("Ignore Collisions");
-        player.gameObject.SetActive(true);
+        playerRef.transform.position = Vector3.zero;
+        playerRef.gameObject.layer = LayerMask.NameToLayer("Ignore Collisions");
+        playerRef.gameObject.SetActive(true);
         Invoke(nameof(TurnOnCollisions), respawnInvulnerabilityTime);
     }
 
     private void TurnOnCollisions()
     {
-        player.gameObject.layer = LayerMask.NameToLayer("Player");
+        playerRef.gameObject.layer = LayerMask.NameToLayer("Player");
     }
 
     private void GameOver()

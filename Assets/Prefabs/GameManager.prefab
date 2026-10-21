@@ -44,7 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f041d748710f9bf44b6ad60f8cb13799, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  player: {fileID: 0}
+  playerRef: {fileID: 0}
+  explosionPrefab: {fileID: 3379099021093936810, guid: 5c3ee1c8525f8e84d9f37be5334366f0, type: 3}
   respawnTime: 3
   respawnInvulnerabilityTime: 3
   lives: 3
+  scoreWeight: 50
+  score: 0

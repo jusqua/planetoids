@@ -50,6 +50,7 @@ public class Planetoid : MonoBehaviour
                 CreateSplit();
                 CreateSplit();
             }
+            GameManager.Instance.PlanetoidDestroyed(this);
             Destroy(gameObject);
         }
     }
